@@ -90,7 +90,7 @@ export const CHALLENGES: SqlChallenge[] = [
     codename: 'The Relational Link',
     title: 'Match students to their houses',
     story:
-      'House mentors need a combined report showing each student beside the house they belong to.',
+      'House mentors need a combined report showing each student beside the house they belong to, using the AQA-style linked-table method with FROM, WHERE, and AND instead of JOIN.',
     mission:
       'Return the first name, last name, and house name for Year 11 students using SELECT, FROM, WHERE, AND, and ORDER BY instead of JOIN.',
     answerType: 'select',
