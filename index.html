@@ -9,6 +9,25 @@
       content="SQL Quest is a client-side GCSE SQL revision game for AQA Computer Science students."
     />
     <title>SQL Quest</title>
+    <script>
+      const isGitHubPages = window.location.hostname.endsWith('github.io')
+
+      if (isGitHubPages) {
+        const importMap = document.createElement('script')
+        importMap.type = 'importmap'
+        importMap.textContent = JSON.stringify({
+          imports: {
+            '/src/main.tsx': '/SQL-Quest/assets/app.js',
+          },
+        })
+        document.head.appendChild(importMap)
+
+        const stylesheet = document.createElement('link')
+        stylesheet.rel = 'stylesheet'
+        stylesheet.href = '/SQL-Quest/assets/app.css'
+        document.head.appendChild(stylesheet)
+      }
+    </script>
   </head>
   <body>
     <div id="root"></div>
