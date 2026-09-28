@@ -153,14 +153,59 @@ The app is configured for static hosting and uses:
 - Tailwind CSS
 - `sql.js` WebAssembly
 
-The Vite config includes `base: './'`, which helps asset paths resolve correctly when the site is hosted on a GitHub Pages subpath.
+This repository is set up to deploy to GitHub Pages from the `main` branch using GitHub Actions.
 
-To deploy:
+The current Vite config uses:
 
-1. Run `npm run build`
-2. Publish the contents of the `dist` folder to GitHub Pages
+```ts
+base: '/SQL-Quest/'
+```
+
+This matches the project site URL:
+
+- `https://mrl832.github.io/SQL-Quest/`
+
+### One-Time GitHub Setup
+
+1. Open the repository on GitHub.
+2. Go to `Settings` -> `Pages`.
+3. Under `Source`, choose `GitHub Actions`.
+4. Make sure the repository default branch is `main`.
+
+### Deployment Workflow
+
+The workflow file is stored at:
+
+- `.github/workflows/deploy.yml`
+
+On every push to `main`, GitHub Actions will:
+
+- install dependencies with `npm ci`
+- build the app with `npm run build`
+- publish the `dist` folder to GitHub Pages
+
+### Release Steps
+
+To publish a new release:
+
+1. Run `npm run build` locally to confirm the production build works.
+2. Commit your changes.
+3. Push to `main`.
+4. Open the `Actions` tab on GitHub and wait for the deploy workflow to finish.
+5. Open the GitHub Pages site URL and test the live version.
 
 Because the app is fully client-side, no backend or database server is required.
+
+### Pre-Release Checklist
+
+Before pushing a release, it is worth checking:
+
+- the site loads correctly from the GitHub Pages URL
+- all five levels can be opened and completed
+- `Run Query` and `Reset Table` both work
+- the SQLite `.wasm` asset loads correctly in production
+- browser refresh does not break navigation or assets
+- the README and repository description are up to date
 
 ## Notes For Teachers
 
