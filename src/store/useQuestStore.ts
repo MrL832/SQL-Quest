@@ -41,9 +41,7 @@ export const useQuestStore = create<QuestStore>()(
       currentChallengeId: CHALLENGES[0].id,
       unlockedLevel: 1,
       completedChallengeIds: [],
-      editorByChallenge: {
-        [CHALLENGES[0].id]: CHALLENGES[0].starterQuery,
-      },
+      editorByChallenge: {},
       executionState: null,
       isReady: false,
       activeTable: 'Students',
@@ -80,7 +78,7 @@ export const useQuestStore = create<QuestStore>()(
             ok: false,
             kind: 'info',
             message: isSameChallenge
-              ? `${challenge.codename} reloaded. The table state and starter query are ready again.`
+              ? `${challenge.codename} reloaded. The table state is reset and the editor is blank again.`
               : `Loaded ${challenge.codename}. Review the mission and run your SQL.`,
           }),
           editorByChallenge: {
@@ -166,13 +164,21 @@ export const useQuestStore = create<QuestStore>()(
     }),
     {
       name: 'sql-quest-progress',
+      version: 2,
       storage: createJSONStorage(() => localStorage),
       partialize: (state) => ({
         currentChallengeId: state.currentChallengeId,
         unlockedLevel: state.unlockedLevel,
         completedChallengeIds: state.completedChallengeIds,
-        editorByChallenge: state.editorByChallenge,
       }),
+      migrate: (persistedState) => {
+        const state = persistedState as Partial<QuestStore>
+
+        return {
+          ...state,
+          editorByChallenge: {},
+        } as QuestStore
+      },
     },
   ),
 )

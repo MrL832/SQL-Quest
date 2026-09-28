@@ -60,7 +60,7 @@ export const CHALLENGES: SqlChallenge[] = [
     mission:
       'Write a query that shows only the first and last names of students in YearGroup 11.',
     answerType: 'select',
-    starterQuery: 'SELECT FirstName, LastName\nFROM Students\nWHERE YearGroup = 11;',
+    starterQuery: '',
     focus: ['SELECT', 'FROM', 'WHERE'],
     successMessage: 'Year 11 register recovered. The next console routine is now unlocked.',
     hint: 'Select only the two name fields, then filter rows with WHERE YearGroup = 11.',
@@ -77,7 +77,7 @@ export const CHALLENGES: SqlChallenge[] = [
       'The head of houses wants the leaderboard displayed from highest score to lowest score.',
     mission: 'Show each house name with its points, sorted in descending order of points.',
     answerType: 'select',
-    starterQuery: 'SELECT HouseName, Points\nFROM Houses\nORDER BY Points DESC;',
+    starterQuery: '',
     focus: ['ORDER BY', 'DESC'],
     successMessage: 'Leaderboard sorted correctly. Relational missions are now available.',
     hint: 'Use ORDER BY Points DESC so the highest points appear first.',
@@ -94,8 +94,7 @@ export const CHALLENGES: SqlChallenge[] = [
     mission:
       'Return each student first name together with the matching house name using both tables.',
     answerType: 'select',
-    starterQuery:
-      'SELECT Students.FirstName, Houses.HouseName\nFROM Students\nJOIN Houses ON Students.HouseID = Houses.HouseID;',
+    starterQuery: '',
     focus: ['JOIN', 'primary key', 'foreign key'],
     successMessage: 'Foreign-key link established. You can now update the register itself.',
     hint: 'Join Students to Houses using the HouseID field that appears in both tables.',
@@ -113,8 +112,7 @@ export const CHALLENGES: SqlChallenge[] = [
     mission:
       "Insert Alex Smith into Students with StudentID 10, YearGroup 10, and HouseID 2.",
     answerType: 'mutation',
-    starterQuery:
-      "INSERT INTO Students (StudentID, FirstName, LastName, YearGroup, HouseID)\nVALUES (10, 'Alex', 'Smith', 10, 2);",
+    starterQuery: '',
     focus: ['INSERT INTO', 'VALUES'],
     successMessage: 'New student added. Final admin clean-up missions are now unlocked.',
     hint: 'List the Students fields in brackets, then provide matching values in the same order.',
@@ -131,8 +129,7 @@ export const CHALLENGES: SqlChallenge[] = [
     mission:
       'Increase Dragon House to 200 points and delete Ruby Taylor from the Students table.',
     answerType: 'mutation',
-    starterQuery:
-      "UPDATE Houses\nSET Points = 200\nWHERE HouseName = 'Dragon';\n\nDELETE FROM Students\nWHERE FirstName = 'Ruby' AND LastName = 'Taylor';",
+    starterQuery: '',
     focus: ['UPDATE', 'SET', 'DELETE'],
     successMessage: 'Database maintenance complete. SQL Quest is fully mastered.',
     hint: 'Use one UPDATE statement and one DELETE statement, each with a precise WHERE clause.',
