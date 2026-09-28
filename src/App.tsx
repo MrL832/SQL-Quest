@@ -67,9 +67,8 @@ function App() {
                 </div>
               </div>
               <p className="mt-4 max-w-3xl text-sm leading-7 text-slate-300 sm:text-base">
-                A client-side SQL adventure for UK GCSE Computer Science students. Every query runs
-                in the browser using SQLite WebAssembly, so the app deploys cleanly to GitHub Pages
-                with no backend services.
+                Practise GCSE SQL by completing short database missions, testing your queries, and
+                unlocking new levels as your confidence grows.
               </p>
             </div>
 
