@@ -92,14 +92,14 @@ export const CHALLENGES: SqlChallenge[] = [
     story:
       'House mentors need a combined report showing each student beside the house they belong to.',
     mission:
-      'Return each student first name together with the matching house name using both tables.',
+      'Return the first name, last name, and house name for Year 11 students using SELECT, FROM, WHERE, AND, and ORDER BY instead of JOIN.',
     answerType: 'select',
     starterQuery: '',
-    focus: ['JOIN', 'primary key', 'foreign key'],
+    focus: ['WHERE', 'AND', 'ORDER BY'],
     successMessage: 'Foreign-key link established. You can now update the register itself.',
-    hint: 'Join Students to Houses using the HouseID field that appears in both tables.',
+    hint: 'List both tables after FROM, match them with Students.HouseID = Houses.HouseID, add AND YearGroup = 11, then sort by LastName ASC.',
     expectedQuery:
-      'SELECT Students.FirstName, Houses.HouseName FROM Students JOIN Houses ON Students.HouseID = Houses.HouseID ORDER BY Students.StudentID;',
+      'SELECT Students.FirstName, Students.LastName, Houses.HouseName FROM Students, Houses WHERE Students.HouseID = Houses.HouseID AND Students.YearGroup = 11 ORDER BY Students.LastName ASC;',
     orderMatters: true,
   },
   {
