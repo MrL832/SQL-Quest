@@ -53,6 +53,9 @@ export function LevelSidebar({
                   </p>
                   <h3 className="mt-1 text-sm font-semibold text-slate-100">{challenge.codename}</h3>
                   <p className="mt-1 text-sm text-slate-400">{challenge.title}</p>
+                  {isActive ? (
+                    <p className="mt-2 text-xs text-cyan-300">Active level. Click again to reload it.</p>
+                  ) : null}
                 </div>
 
                 <div className="rounded-full border border-slate-700 p-2 text-slate-300">

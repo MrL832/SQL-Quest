@@ -65,6 +65,7 @@ export const useQuestStore = create<QuestStore>()(
       },
       async selectChallenge(challengeId) {
         const challenge = getChallenge(challengeId)
+        const isSameChallenge = challenge.id === get().currentChallengeId
 
         if (challenge.level > get().unlockedLevel) {
           return
@@ -78,11 +79,15 @@ export const useQuestStore = create<QuestStore>()(
           executionState: replaceFeedback(initialExecutionState, {
             ok: false,
             kind: 'info',
-            message: `Loaded ${challenge.codename}. Review the mission and run your SQL.`,
+            message: isSameChallenge
+              ? `${challenge.codename} reloaded. The table state and starter query are ready again.`
+              : `Loaded ${challenge.codename}. Review the mission and run your SQL.`,
           }),
           editorByChallenge: {
             ...state.editorByChallenge,
-            [challenge.id]: state.editorByChallenge[challenge.id] ?? challenge.starterQuery,
+            [challenge.id]: isSameChallenge
+              ? challenge.starterQuery
+              : state.editorByChallenge[challenge.id] ?? challenge.starterQuery,
           },
         }))
       },
