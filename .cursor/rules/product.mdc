@@ -1,0 +1,33 @@
+---
+description: SQL Quest architecture, file map, and student flow
+alwaysApply: true
+---
+
+# SQL Quest
+
+Browser-only AQA GCSE SQL practice app. Five levels run against a real in-memory SQLite database (`sql.js`). There is no backend.
+
+Stack: React, TypeScript, Vite (`base: '/SQL-Quest/'`), Tailwind CSS v4, shadcn/ui (`base-nova`, Base UI, lucide), Zustand.
+
+## Layout
+
+- Header (`app-header.tsx`): title, completion progress, theme toggle.
+- Level stepper (`level-stepper.tsx`): the only place to change levels. Locked levels stay disabled.
+- Below `lg`, one column in this order: mission, editor, database reference, cheat sheet.
+- At `lg`, two panes: mission + reference + cheat sheet on the left; the editor spans the right.
+- Grid children need `min-w-0`. The mobile track is `minmax(0, 1fr)`, so a wide table scrolls inside its card instead of widening the page.
+
+## Where things live
+
+- Challenge copy and seed SQL: `src/lib/challenges.ts`
+- Query execution and marking: `src/lib/sqlEngine.ts`
+- Progress and the active editor: `src/store/useQuestStore.ts` (only progress is persisted)
+- Theme: `src/index.css` tokens, `theme-provider.tsx`, `hooks/use-theme.ts`
+- UI primitives: `src/components/ui/` (add them with `npx shadcn@latest add`, do not hand-write primitives)
+
+## Student flow
+
+1. Read the mission.
+2. Write SQL and press Run query, or Cmd/Ctrl+Enter.
+3. A correct answer opens `success-dialog.tsx` and unlocks the next level.
+4. Reset data restores the seed tables for the current level.
