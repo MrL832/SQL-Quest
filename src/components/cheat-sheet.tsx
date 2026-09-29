@@ -4,6 +4,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from '@/components/ui/accordion'
+import { SqlCode } from '@/components/sql-code'
 import { Card, CardContent } from '@/components/ui/card'
 import { AQA_CHEAT_SHEET } from '@/lib/challenges'
 
@@ -22,14 +23,15 @@ export function CheatSheet() {
               </span>
             </AccordionTrigger>
             <AccordionContent className="pb-0">
-              <dl className="mt-3 flex flex-col gap-2.5">
+              <dl className="mt-3 flex flex-col gap-3">
                 {AQA_CHEAT_SHEET.map((entry) => (
                   <div key={entry.task} className="flex flex-col gap-1">
-                    <dt className="text-xs text-muted-foreground">{entry.task}</dt>
+                    <dt className="text-sm text-muted-foreground">{entry.task}</dt>
                     <dd>
-                      <code className="block overflow-x-auto rounded-md bg-muted px-2.5 py-1.5 font-mono text-xs">
-                        {entry.code}
-                      </code>
+                      <SqlCode
+                        code={entry.code}
+                        className="block overflow-x-auto rounded-md border border-primary/15 bg-accent/50 px-2.5 py-2 text-sm whitespace-pre"
+                      />
                     </dd>
                   </div>
                 ))}

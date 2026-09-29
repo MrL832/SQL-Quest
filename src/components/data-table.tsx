@@ -6,6 +6,7 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table'
+import { cn } from '@/lib/utils'
 import type { CellValue, TableData } from '@/types'
 
 function formatCell(value: CellValue) {
@@ -20,13 +21,19 @@ function formatCell(value: CellValue) {
   return String(value)
 }
 
-export function DataTable({ data }: { data: TableData }) {
+export function DataTable({
+  data,
+  containerClassName,
+}: {
+  data: TableData
+  containerClassName?: string
+}) {
   return (
-    <Table>
-      <TableHeader className="sticky top-0 bg-muted/80 backdrop-blur-sm">
-        <TableRow className="hover:bg-transparent">
+    <Table containerClassName={containerClassName}>
+      <TableHeader className="sticky top-0 z-10 bg-accent">
+        <TableRow className="border-b-primary/20 hover:bg-transparent">
           {data.columns.map((column) => (
-            <TableHead key={column} className="font-mono text-xs">
+            <TableHead key={column} className="font-mono text-xs text-accent-foreground">
               {column}
             </TableHead>
           ))}
@@ -38,9 +45,10 @@ export function DataTable({ data }: { data: TableData }) {
             {row.map((value, cellIndex) => (
               <TableCell
                 key={cellIndex}
-                className={
-                  value === null ? 'font-mono text-xs text-muted-foreground italic' : 'font-mono text-xs'
-                }
+                className={cn(
+                  'font-mono text-sm',
+                  value === null && 'text-muted-foreground italic',
+                )}
               >
                 {formatCell(value)}
               </TableCell>

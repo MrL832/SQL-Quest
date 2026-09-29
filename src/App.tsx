@@ -71,9 +71,9 @@ function App() {
       {!isReady || !executionState ? (
         <WorkspaceSkeleton />
       ) : (
-        <main className="mx-auto grid w-full max-w-[1400px] flex-1 items-start gap-4 px-4 py-6 sm:px-6 lg:grid-cols-[minmax(0,5fr)_minmax(0,6fr)]">
+        <main className="mx-auto grid w-full max-w-[1400px] flex-1 grid-cols-[minmax(0,1fr)] items-start gap-4 px-4 py-6 sm:px-6 lg:grid-cols-[minmax(0,5fr)_minmax(0,6fr)]">
           {/* Narrow screens read mission then editor; the reference material follows. */}
-          <div className="order-1 lg:col-start-1">
+          <div className="order-1 min-w-0 lg:col-start-1">
             <MissionPanel
               key={currentChallenge.id}
               challenge={currentChallenge}
@@ -81,7 +81,7 @@ function App() {
             />
           </div>
 
-          <div className="order-2 lg:col-start-2 lg:row-span-3 lg:row-start-1">
+          <div className="order-2 min-w-0 lg:col-start-2 lg:row-span-3 lg:row-start-1">
             <SqlWorkspace
               value={editorValue}
               isRunning={executionState.isRunning}
@@ -98,7 +98,7 @@ function App() {
             />
           </div>
 
-          <div className="order-3 lg:col-start-1">
+          <div className="order-3 min-w-0 lg:col-start-1">
             <SchemaReference
               snapshot={executionState.snapshot}
               activeTable={activeTable}
@@ -106,7 +106,7 @@ function App() {
             />
           </div>
 
-          <div className="order-4 lg:col-start-1">
+          <div className="order-4 min-w-0 lg:col-start-1">
             <CheatSheet />
           </div>
         </main>

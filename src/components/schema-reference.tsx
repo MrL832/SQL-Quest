@@ -10,6 +10,7 @@ import {
 } from '@/components/ui/card'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { TABLE_NAMES } from '@/lib/challenges'
+import { cn } from '@/lib/utils'
 import type { DatabaseSnapshot, TableName } from '@/types'
 
 interface ColumnDefinition {
@@ -74,20 +75,28 @@ export function SchemaReference({
           <div className="flex flex-col gap-3">
             <div className="flex flex-wrap gap-1.5">
               {TABLE_DETAILS[tableName].columns.map((column) => (
-                <Badge key={column.name} variant="outline" className="gap-1 font-mono text-xs">
+                <Badge
+                  key={column.name}
+                  variant="outline"
+                  className={cn(
+                    'gap-1 font-mono text-xs',
+                    column.key && 'border-primary/40 bg-primary/10 text-primary',
+                  )}
+                >
                   {column.name}
                   {column.key ? (
-                    <span className="text-[0.625rem] text-muted-foreground">{column.key}</span>
+                    <span className="font-bold opacity-70">{column.key}</span>
                   ) : null}
                 </Badge>
               ))}
             </div>
 
-            <p className="text-xs text-muted-foreground">{TABLE_DETAILS[tableName].note}</p>
+            <p className="text-sm text-muted-foreground">{TABLE_DETAILS[tableName].note}</p>
 
-            <div className="max-h-96 overflow-auto rounded-lg border">
-              <DataTable data={snapshot[tableName]} />
-            </div>
+            <DataTable
+              data={snapshot[tableName]}
+              containerClassName="max-h-96 rounded-lg border"
+            />
           </div>
         </TabsContent>
       ))}

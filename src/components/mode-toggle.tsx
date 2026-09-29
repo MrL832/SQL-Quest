@@ -23,7 +23,7 @@ export function ModeToggle() {
     <DropdownMenu>
       <DropdownMenuTrigger
         render={
-          <Button variant="ghost" size="icon-sm" aria-label="Change colour theme">
+          <Button variant="ghost" size="icon" aria-label="Change colour theme">
             {resolvedTheme === 'dark' ? <MoonIcon /> : <SunIcon />}
           </Button>
         }
