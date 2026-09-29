@@ -5,35 +5,38 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from '@/components/ui/table'
-import { cn } from '@/lib/utils'
-import type { CellValue, TableData } from '@/types'
+} from "@/components/ui/table";
+import { cn } from "@/lib/utils";
+import type { CellValue, TableData } from "@/types";
 
 function formatCell(value: CellValue) {
   if (value === null) {
-    return 'NULL'
+    return "NULL";
   }
 
   if (value instanceof Uint8Array) {
-    return `[${value.length} bytes]`
+    return `[${value.length} bytes]`;
   }
 
-  return String(value)
+  return String(value);
 }
 
 export function DataTable({
   data,
   containerClassName,
 }: {
-  data: TableData
-  containerClassName?: string
+  data: TableData;
+  containerClassName?: string;
 }) {
   return (
     <Table containerClassName={containerClassName}>
       <TableHeader className="sticky top-0 z-10 bg-accent">
         <TableRow className="border-b-primary/20 hover:bg-transparent">
           {data.columns.map((column) => (
-            <TableHead key={column} className="font-mono text-xs text-accent-foreground">
+            <TableHead
+              key={column}
+              className="font-mono text-xs text-accent-foreground"
+            >
               {column}
             </TableHead>
           ))}
@@ -46,8 +49,8 @@ export function DataTable({
               <TableCell
                 key={cellIndex}
                 className={cn(
-                  'font-mono text-sm',
-                  value === null && 'text-muted-foreground italic',
+                  "font-mono text-sm",
+                  value === null && "text-muted-foreground italic",
                 )}
               >
                 {formatCell(value)}
@@ -57,5 +60,5 @@ export function DataTable({
         ))}
       </TableBody>
     </Table>
-  )
+  );
 }

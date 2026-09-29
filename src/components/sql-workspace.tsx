@@ -1,35 +1,50 @@
-import { useRef } from 'react'
-import { CheckCircle2Icon, InfoIcon, PlayIcon, RotateCcwIcon, TriangleAlertIcon } from 'lucide-react'
-import { DataTable } from '@/components/data-table'
-import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert'
-import { Button } from '@/components/ui/button'
+import { useRef } from "react";
+import {
+  CheckCircle2Icon,
+  InfoIcon,
+  PlayIcon,
+  RotateCcwIcon,
+  TriangleAlertIcon,
+} from "lucide-react";
+import { DataTable } from "@/components/data-table";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from '@/components/ui/card'
-import { Empty, EmptyDescription, EmptyHeader, EmptyTitle } from '@/components/ui/empty'
-import { Kbd, KbdGroup } from '@/components/ui/kbd'
-import { Spinner } from '@/components/ui/spinner'
-import type { ExecutionFeedback, TableData } from '@/types'
+} from "@/components/ui/card";
+import {
+  Empty,
+  EmptyDescription,
+  EmptyHeader,
+  EmptyTitle,
+} from "@/components/ui/empty";
+import { Kbd, KbdGroup } from "@/components/ui/kbd";
+import { Spinner } from "@/components/ui/spinner";
+import type { ExecutionFeedback, TableData } from "@/types";
 
 const FEEDBACK_PRESENTATION = {
-  success: { variant: 'success', title: 'Correct', icon: CheckCircle2Icon },
-  error: { variant: 'destructive', title: 'Not quite yet', icon: TriangleAlertIcon },
-  info: { variant: 'default', title: 'Ready', icon: InfoIcon },
-} as const
+  success: { variant: "success", title: "Correct", icon: CheckCircle2Icon },
+  error: {
+    variant: "destructive",
+    title: "Not quite yet",
+    icon: TriangleAlertIcon,
+  },
+  info: { variant: "default", title: "Ready", icon: InfoIcon },
+} as const;
 
 interface SqlWorkspaceProps {
-  value: string
-  isRunning: boolean
-  resultTitle: string
-  resultTable: TableData | null
-  feedback: ExecutionFeedback | null
-  onChange: (value: string) => void
-  onRun: () => void
-  onReset: () => void
+  value: string;
+  isRunning: boolean;
+  resultTitle: string;
+  resultTable: TableData | null;
+  feedback: ExecutionFeedback | null;
+  onChange: (value: string) => void;
+  onRun: () => void;
+  onReset: () => void;
 }
 
 export function SqlWorkspace({
@@ -42,10 +57,10 @@ export function SqlWorkspace({
   onRun,
   onReset,
 }: SqlWorkspaceProps) {
-  const gutterRef = useRef<HTMLDivElement>(null)
-  const lineCount = Math.max(8, value.split('\n').length)
-  const presentation = feedback ? FEEDBACK_PRESENTATION[feedback.kind] : null
-  const hasResults = resultTable !== null && resultTable.columns.length > 0
+  const gutterRef = useRef<HTMLDivElement>(null);
+  const lineCount = Math.max(8, value.split("\n").length);
+  const presentation = feedback ? FEEDBACK_PRESENTATION[feedback.kind] : null;
+  const hasResults = resultTable !== null && resultTable.columns.length > 0;
 
   return (
     <div className="flex flex-col gap-4">
@@ -54,7 +69,9 @@ export function SqlWorkspace({
         <CardHeader className="flex flex-wrap items-start justify-between gap-x-3 gap-y-2.5">
           <div className="flex min-w-0 flex-col gap-1">
             <CardTitle>SQL editor</CardTitle>
-            <CardDescription>Runs against a real in-browser SQLite database.</CardDescription>
+            <CardDescription>
+              Runs against a real in-browser SQLite database.
+            </CardDescription>
           </div>
           <div className="flex items-center gap-2">
             <Button variant="outline" onClick={onReset} disabled={isRunning}>
@@ -67,7 +84,7 @@ export function SqlWorkspace({
               ) : (
                 <PlayIcon data-icon="inline-start" />
               )}
-              {isRunning ? 'Running' : 'Run query'}
+              {isRunning ? "Running" : "Run query"}
             </Button>
           </div>
         </CardHeader>
@@ -79,8 +96,10 @@ export function SqlWorkspace({
                 editor.sql
               </span>
               <KbdGroup className="text-muted-foreground">
-                <Kbd>{navigator.platform.includes('Mac') ? '\u2318' : 'Ctrl'}</Kbd>
-                <Kbd>{'\u21B5'}</Kbd>
+                <Kbd>
+                  {navigator.platform.includes("Mac") ? "\u2318" : "Ctrl"}
+                </Kbd>
+                <Kbd>{"\u21B5"}</Kbd>
                 <span className="text-xs">to run</span>
               </KbdGroup>
             </div>
@@ -100,17 +119,20 @@ export function SqlWorkspace({
                 value={value}
                 spellCheck={false}
                 aria-label="SQL query editor"
-                placeholder={'SELECT ...\nFROM ...\nWHERE ...;'}
+                placeholder={"SELECT ...\nFROM ...\nWHERE ...;"}
                 onChange={(event) => onChange(event.target.value)}
                 onScroll={(event) => {
                   if (gutterRef.current) {
-                    gutterRef.current.scrollTop = event.currentTarget.scrollTop
+                    gutterRef.current.scrollTop = event.currentTarget.scrollTop;
                   }
                 }}
                 onKeyDown={(event) => {
-                  if ((event.metaKey || event.ctrlKey) && event.key === 'Enter') {
-                    event.preventDefault()
-                    onRun()
+                  if (
+                    (event.metaKey || event.ctrlKey) &&
+                    event.key === "Enter"
+                  ) {
+                    event.preventDefault();
+                    onRun();
                   }
                 }}
                 className="h-64 w-full min-w-0 flex-1 resize-none bg-transparent px-3 py-3 font-mono text-[0.9375rem] leading-7 outline-none placeholder:text-muted-foreground/60"
@@ -134,7 +156,10 @@ export function SqlWorkspace({
         </CardHeader>
         <CardContent>
           {hasResults ? (
-            <DataTable data={resultTable} containerClassName="max-h-96 rounded-lg border" />
+            <DataTable
+              data={resultTable}
+              containerClassName="max-h-96 rounded-lg border"
+            />
           ) : (
             <Empty className="rounded-lg border border-dashed py-8">
               <EmptyHeader>
@@ -148,5 +173,5 @@ export function SqlWorkspace({
         </CardContent>
       </Card>
     </div>
-  )
+  );
 }

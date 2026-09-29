@@ -1,7 +1,7 @@
-import { useState } from 'react'
-import { ChevronDownIcon, LightbulbIcon } from 'lucide-react'
-import { Badge } from '@/components/ui/badge'
-import { Button } from '@/components/ui/button'
+import { useState } from "react";
+import { ChevronDownIcon, LightbulbIcon } from "lucide-react";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import {
   Card,
   CardAction,
@@ -9,21 +9,21 @@ import {
   CardDescription,
   CardHeader,
   CardTitle,
-} from '@/components/ui/card'
+} from "@/components/ui/card";
 import {
   Collapsible,
   CollapsibleContent,
   CollapsibleTrigger,
-} from '@/components/ui/collapsible'
-import type { SqlChallenge } from '@/types'
+} from "@/components/ui/collapsible";
+import type { SqlChallenge } from "@/types";
 
 interface MissionPanelProps {
-  challenge: SqlChallenge
-  isCompleted: boolean
+  challenge: SqlChallenge;
+  isCompleted: boolean;
 }
 
 export function MissionPanel({ challenge, isCompleted }: MissionPanelProps) {
-  const [isHintOpen, setIsHintOpen] = useState(false)
+  const [isHintOpen, setIsHintOpen] = useState(false);
 
   return (
     <Card>
@@ -34,7 +34,9 @@ export function MissionPanel({ challenge, isCompleted }: MissionPanelProps) {
         <CardTitle className="text-2xl">{challenge.title}</CardTitle>
         {isCompleted ? (
           <CardAction>
-            <Badge className="bg-success text-success-foreground">Completed</Badge>
+            <Badge className="bg-success text-success-foreground">
+              Completed
+            </Badge>
           </CardAction>
         ) : null}
       </CardHeader>
@@ -52,12 +54,19 @@ export function MissionPanel({ challenge, isCompleted }: MissionPanelProps) {
         <Collapsible open={isHintOpen} onOpenChange={setIsHintOpen}>
           <CollapsibleTrigger
             render={
-              <Button variant="ghost" className="-ml-2.5 text-primary hover:text-primary">
+              <Button
+                variant="ghost"
+                className="-ml-2.5 text-primary hover:text-primary"
+              >
                 <LightbulbIcon data-icon="inline-start" />
-                {isHintOpen ? 'Hide hint' : 'Stuck? Show a hint'}
+                {isHintOpen ? "Hide hint" : "Stuck? Show a hint"}
                 <ChevronDownIcon
                   data-icon="inline-end"
-                  className={isHintOpen ? 'rotate-180 transition-transform' : 'transition-transform'}
+                  className={
+                    isHintOpen
+                      ? "rotate-180 transition-transform"
+                      : "transition-transform"
+                  }
                 />
               </Button>
             }
@@ -66,7 +75,9 @@ export function MissionPanel({ challenge, isCompleted }: MissionPanelProps) {
             <div className="mt-2 flex flex-col gap-3 rounded-lg border border-dashed border-primary/35 bg-accent/40 p-3.5">
               <p>{challenge.hint}</p>
               <div className="flex flex-wrap items-center gap-1.5">
-                <span className="text-sm text-muted-foreground">Statements you need:</span>
+                <span className="text-sm text-muted-foreground">
+                  Statements you need:
+                </span>
                 {challenge.focus.map((statement) => (
                   <Badge key={statement} className="font-mono text-xs">
                     {statement}
@@ -78,5 +89,5 @@ export function MissionPanel({ challenge, isCompleted }: MissionPanelProps) {
         </Collapsible>
       </CardContent>
     </Card>
-  )
+  );
 }

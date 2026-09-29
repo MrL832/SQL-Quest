@@ -1,23 +1,25 @@
-import { DatabaseIcon } from 'lucide-react'
-import { ModeToggle } from '@/components/mode-toggle'
-import { Progress } from '@/components/ui/progress'
-import { Separator } from '@/components/ui/separator'
+import { DatabaseIcon } from "lucide-react";
+import { ModeToggle } from "@/components/mode-toggle";
+import { Progress } from "@/components/ui/progress";
+import { Separator } from "@/components/ui/separator";
 
 interface AppHeaderProps {
-  completedCount: number
-  totalCount: number
+  completedCount: number;
+  totalCount: number;
 }
 
 export function AppHeader({ completedCount, totalCount }: AppHeaderProps) {
   return (
     <header className="sticky top-0 z-40 border-b bg-background/85 backdrop-blur-sm">
-      <div className="mx-auto flex h-16 w-full max-w-[1400px] items-center gap-3 px-4 sm:px-6">
+      <div className="mx-auto flex h-16 w-full max-w-350 items-center gap-3 px-4 sm:px-6">
         <span className="flex size-9 items-center justify-center rounded-lg bg-primary text-primary-foreground shadow-sm">
           <DatabaseIcon className="size-5" />
         </span>
 
         <div className="flex min-w-0 flex-col">
-          <span className="text-base leading-tight font-semibold">SQL Quest</span>
+          <span className="text-base leading-tight font-semibold">
+            SQL Quest
+          </span>
           <span className="hidden text-xs leading-tight text-muted-foreground sm:block">
             AQA GCSE database practice
           </span>
@@ -41,5 +43,5 @@ export function AppHeader({ completedCount, totalCount }: AppHeaderProps) {
         </div>
       </div>
     </header>
-  )
+  );
 }

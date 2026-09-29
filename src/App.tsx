@@ -1,18 +1,18 @@
-import { useEffect } from 'react'
-import { AppHeader } from '@/components/app-header'
-import { CheatSheet } from '@/components/cheat-sheet'
-import { LevelStepper } from '@/components/level-stepper'
-import { MissionPanel } from '@/components/mission-panel'
-import { SchemaReference } from '@/components/schema-reference'
-import { SqlWorkspace } from '@/components/sql-workspace'
-import { SuccessDialog } from '@/components/success-dialog'
-import { Skeleton } from '@/components/ui/skeleton'
-import { CHALLENGES } from '@/lib/challenges'
-import { useQuestStore } from '@/store/useQuestStore'
+import { useEffect } from "react";
+import { AppHeader } from "@/components/app-header";
+import { CheatSheet } from "@/components/cheat-sheet";
+import { LevelStepper } from "@/components/level-stepper";
+import { MissionPanel } from "@/components/mission-panel";
+import { SchemaReference } from "@/components/schema-reference";
+import { SqlWorkspace } from "@/components/sql-workspace";
+import { SuccessDialog } from "@/components/success-dialog";
+import { Skeleton } from "@/components/ui/skeleton";
+import { CHALLENGES } from "@/lib/challenges";
+import { useQuestStore } from "@/store/useQuestStore";
 
 function WorkspaceSkeleton() {
   return (
-    <div className="mx-auto grid w-full max-w-[1400px] gap-4 px-4 py-6 sm:px-6 lg:grid-cols-[minmax(0,5fr)_minmax(0,6fr)]">
+    <div className="mx-auto grid w-full max-w-350 gap-4 px-4 py-6 sm:px-6 lg:grid-cols-[minmax(0,5fr)_minmax(0,6fr)]">
       <div className="flex flex-col gap-4">
         <Skeleton className="h-56 rounded-xl" />
         <Skeleton className="h-72 rounded-xl" />
@@ -22,7 +22,7 @@ function WorkspaceSkeleton() {
         <Skeleton className="h-40 rounded-xl" />
       </div>
     </div>
-  )
+  );
 }
 
 function App() {
@@ -42,36 +42,41 @@ function App() {
     resetActiveChallenge,
     setActiveTable,
     closeSuccessModal,
-  } = useQuestStore()
+  } = useQuestStore();
 
   useEffect(() => {
-    void initialise()
-  }, [initialise])
+    void initialise();
+  }, [initialise]);
 
   const currentChallenge =
-    CHALLENGES.find((challenge) => challenge.id === currentChallengeId) ?? CHALLENGES[0]
-  const editorValue = editorByChallenge[currentChallenge.id] ?? currentChallenge.starterQuery
+    CHALLENGES.find((challenge) => challenge.id === currentChallengeId) ??
+    CHALLENGES[0];
+  const editorValue =
+    editorByChallenge[currentChallenge.id] ?? currentChallenge.starterQuery;
   const nextChallenge = CHALLENGES.find(
     (challenge) => challenge.level === currentChallenge.level + 1,
-  )
+  );
 
   return (
     <div className="flex min-h-screen flex-col bg-background">
-      <AppHeader completedCount={completedChallengeIds.length} totalCount={CHALLENGES.length} />
+      <AppHeader
+        completedCount={completedChallengeIds.length}
+        totalCount={CHALLENGES.length}
+      />
 
       <LevelStepper
         currentChallengeId={currentChallenge.id}
         unlockedLevel={unlockedLevel}
         completedChallengeIds={completedChallengeIds}
         onSelect={(challengeId) => {
-          void selectChallenge(challengeId)
+          void selectChallenge(challengeId);
         }}
       />
 
       {!isReady || !executionState ? (
         <WorkspaceSkeleton />
       ) : (
-        <main className="mx-auto grid w-full max-w-[1400px] flex-1 grid-cols-[minmax(0,1fr)] items-start gap-4 px-4 py-6 sm:px-6 lg:grid-cols-[minmax(0,5fr)_minmax(0,6fr)]">
+        <main className="mx-auto grid w-full max-w-350 flex-1 grid-cols-[minmax(0,1fr)] items-start gap-4 px-4 py-6 sm:px-6 lg:grid-cols-[minmax(0,5fr)_minmax(0,6fr)]">
           {/* Narrow screens read mission then editor; the reference material follows. */}
           <div className="order-1 min-w-0 lg:col-start-1">
             <MissionPanel
@@ -90,10 +95,10 @@ function App() {
               feedback={executionState.feedback}
               onChange={setEditorValue}
               onRun={() => {
-                void runActiveQuery()
+                void runActiveQuery();
               }}
               onReset={() => {
-                void resetActiveChallenge()
+                void resetActiveChallenge();
               }}
             />
           </div>
@@ -116,20 +121,22 @@ function App() {
         open={showSuccessModal}
         challenge={currentChallenge}
         nextChallenge={
-          nextChallenge && nextChallenge.level <= unlockedLevel ? nextChallenge : undefined
+          nextChallenge && nextChallenge.level <= unlockedLevel
+            ? nextChallenge
+            : undefined
         }
         onOpenChange={(open) => {
           if (!open) {
-            closeSuccessModal()
+            closeSuccessModal();
           }
         }}
         onAdvance={(challengeId) => {
-          closeSuccessModal()
-          void selectChallenge(challengeId)
+          closeSuccessModal();
+          void selectChallenge(challengeId);
         }}
       />
     </div>
-  )
+  );
 }
 
-export default App
+export default App;

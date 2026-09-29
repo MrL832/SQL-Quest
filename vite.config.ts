@@ -8,7 +8,7 @@ export default defineConfig({
     host: true,
   },
   plugins: [react(), tailwindcss()],
-  base: "/SQL-Quest/", // Matches https://mrl832.github.io/SQL-Quest/
+  base: "/SQL-Quest/",
   resolve: {
     alias: {
       "@": path.resolve(import.meta.dirname, "./src"),

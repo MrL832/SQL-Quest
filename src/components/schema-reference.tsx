@@ -1,5 +1,5 @@
-import { DataTable } from '@/components/data-table'
-import { Badge } from '@/components/ui/badge'
+import { DataTable } from "@/components/data-table";
+import { Badge } from "@/components/ui/badge";
 import {
   Card,
   CardAction,
@@ -7,42 +7,45 @@ import {
   CardDescription,
   CardHeader,
   CardTitle,
-} from '@/components/ui/card'
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
-import { TABLE_NAMES } from '@/lib/challenges'
-import { cn } from '@/lib/utils'
-import type { DatabaseSnapshot, TableName } from '@/types'
+} from "@/components/ui/card";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { TABLE_NAMES } from "@/lib/challenges";
+import { cn } from "@/lib/utils";
+import type { DatabaseSnapshot, TableName } from "@/types";
 
 interface ColumnDefinition {
-  name: string
-  key?: 'PK' | 'FK'
+  name: string;
+  key?: "PK" | "FK";
 }
 
-const TABLE_DETAILS: Record<TableName, { columns: ColumnDefinition[]; note: string }> = {
+const TABLE_DETAILS: Record<
+  TableName,
+  { columns: ColumnDefinition[]; note: string }
+> = {
   Students: {
     columns: [
-      { name: 'StudentID', key: 'PK' },
-      { name: 'FirstName' },
-      { name: 'LastName' },
-      { name: 'YearGroup' },
-      { name: 'HouseID', key: 'FK' },
+      { name: "StudentID", key: "PK" },
+      { name: "FirstName" },
+      { name: "LastName" },
+      { name: "YearGroup" },
+      { name: "HouseID", key: "FK" },
     ],
-    note: 'Each student stores a HouseID foreign key that links back to Houses.',
+    note: "Each student stores a HouseID foreign key that links back to Houses.",
   },
   Houses: {
     columns: [
-      { name: 'HouseID', key: 'PK' },
-      { name: 'HouseName' },
-      { name: 'Points' },
+      { name: "HouseID", key: "PK" },
+      { name: "HouseName" },
+      { name: "Points" },
     ],
-    note: 'HouseID is the primary key that Students refers to.',
+    note: "HouseID is the primary key that Students refers to.",
   },
-}
+};
 
 interface SchemaReferenceProps {
-  snapshot: DatabaseSnapshot
-  activeTable: TableName
-  onSelectTable: (tableName: TableName) => void
+  snapshot: DatabaseSnapshot;
+  activeTable: TableName;
+  onSelectTable: (tableName: TableName) => void;
 }
 
 export function SchemaReference({
@@ -58,7 +61,9 @@ export function SchemaReference({
     >
       <CardHeader>
         <CardTitle>Database reference</CardTitle>
-        <CardDescription>Live data, refreshed after every run or reset.</CardDescription>
+        <CardDescription>
+          Live data, refreshed after every run or reset.
+        </CardDescription>
         <CardAction>
           <TabsList>
             {TABLE_NAMES.map((tableName) => (
@@ -79,8 +84,9 @@ export function SchemaReference({
                   key={column.name}
                   variant="outline"
                   className={cn(
-                    'gap-1 font-mono text-xs',
-                    column.key && 'border-primary/40 bg-primary/10 text-primary',
+                    "gap-1 font-mono text-xs",
+                    column.key &&
+                      "border-primary/40 bg-primary/10 text-primary",
                   )}
                 >
                   {column.name}
@@ -91,7 +97,9 @@ export function SchemaReference({
               ))}
             </div>
 
-            <p className="text-sm text-muted-foreground">{TABLE_DETAILS[tableName].note}</p>
+            <p className="text-sm text-muted-foreground">
+              {TABLE_DETAILS[tableName].note}
+            </p>
 
             <DataTable
               data={snapshot[tableName]}
@@ -101,5 +109,5 @@ export function SchemaReference({
         </TabsContent>
       ))}
     </Tabs>
-  )
+  );
 }

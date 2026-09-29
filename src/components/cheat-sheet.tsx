@@ -3,10 +3,10 @@ import {
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
-} from '@/components/ui/accordion'
-import { SqlCode } from '@/components/sql-code'
-import { Card, CardContent } from '@/components/ui/card'
-import { AQA_CHEAT_SHEET } from '@/lib/challenges'
+} from "@/components/ui/accordion";
+import { SqlCode } from "@/components/sql-code";
+import { Card, CardContent } from "@/components/ui/card";
+import { AQA_CHEAT_SHEET } from "@/lib/challenges";
 
 export function CheatSheet() {
   return (
@@ -26,7 +26,9 @@ export function CheatSheet() {
               <dl className="mt-3 flex flex-col gap-3">
                 {AQA_CHEAT_SHEET.map((entry) => (
                   <div key={entry.task} className="flex flex-col gap-1">
-                    <dt className="text-sm text-muted-foreground">{entry.task}</dt>
+                    <dt className="text-sm text-muted-foreground">
+                      {entry.task}
+                    </dt>
                     <dd>
                       <SqlCode
                         code={entry.code}
@@ -41,5 +43,5 @@ export function CheatSheet() {
         </Accordion>
       </CardContent>
     </Card>
-  )
+  );
 }

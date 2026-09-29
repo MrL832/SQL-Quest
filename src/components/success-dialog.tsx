@@ -1,5 +1,5 @@
-import { CheckIcon } from 'lucide-react'
-import { Button } from '@/components/ui/button'
+import { CheckIcon } from "lucide-react";
+import { Button } from "@/components/ui/button";
 import {
   Dialog,
   DialogClose,
@@ -8,15 +8,15 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-} from '@/components/ui/dialog'
-import type { SqlChallenge } from '@/types'
+} from "@/components/ui/dialog";
+import type { SqlChallenge } from "@/types";
 
 interface SuccessDialogProps {
-  open: boolean
-  challenge: SqlChallenge
-  nextChallenge: SqlChallenge | undefined
-  onOpenChange: (open: boolean) => void
-  onAdvance: (challengeId: string) => void
+  open: boolean;
+  challenge: SqlChallenge;
+  nextChallenge: SqlChallenge | undefined;
+  onOpenChange: (open: boolean) => void;
+  onAdvance: (challengeId: string) => void;
 }
 
 export function SuccessDialog({
@@ -38,7 +38,9 @@ export function SuccessDialog({
         </DialogHeader>
 
         <DialogFooter>
-          <DialogClose render={<Button variant="outline">Stay on this level</Button>} />
+          <DialogClose
+            render={<Button variant="outline">Stay on this level</Button>}
+          />
           {nextChallenge ? (
             <Button onClick={() => onAdvance(nextChallenge.id)}>
               Start level {nextChallenge.level}
@@ -49,5 +51,5 @@ export function SuccessDialog({
         </DialogFooter>
       </DialogContent>
     </Dialog>
-  )
+  );
 }
