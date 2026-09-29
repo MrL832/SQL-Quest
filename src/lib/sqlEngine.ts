@@ -5,8 +5,8 @@ import initSqlJs, {
   type SqlValue,
 } from 'sql.js'
 import sqlWasmUrl from 'sql.js/dist/sql-wasm.wasm?url'
-import { SCHEMA_SQL, SEED_SQL, TABLE_NAMES } from './challenges'
-import type { DatabaseSnapshot, ExecutionFeedback, ExecutionState, SqlChallenge, TableData } from '../types'
+import { SCHEMA_SQL, SEED_SQL, TABLE_NAMES } from '@/lib/challenges'
+import type { DatabaseSnapshot, ExecutionFeedback, ExecutionState, SqlChallenge, TableData } from '@/types'
 
 let sqlJsPromise: Promise<SqlJsStatic> | null = null
 
@@ -109,11 +109,11 @@ function getFriendlySqlError(error: unknown) {
   }
 
   if (rawMessage.toLowerCase().includes('no such column')) {
-    return `One of the field names does not exist. Re-check the schema preview for exact column names. SQLite says: ${rawMessage}`
+    return `One of the field names does not exist. Check the Database reference panel for the exact column names. SQLite says: ${rawMessage}`
   }
 
   if (rawMessage.toLowerCase().includes('no such table')) {
-    return `One of the table names does not exist. Re-check the schema preview for the correct table name. SQLite says: ${rawMessage}`
+    return `One of the table names does not exist. Check the Database reference panel for the correct table name. SQLite says: ${rawMessage}`
   }
 
   return `SQLite could not run that query yet. Review the task and try again. SQLite says: ${rawMessage}`
@@ -130,10 +130,10 @@ export async function getInitialExecutionState(): Promise<ExecutionState> {
   try {
     return {
       isRunning: false,
-      resultTitle: 'Students table preview',
-      resultTable: queryTable(db, 'Students'),
+      resultTitle: 'Query results',
+      resultTable: null,
       snapshot: snapshotDatabase(db),
-      feedback: buildFeedback('info', 'Run a query to test your SQL against the mission.'),
+      feedback: buildFeedback('info', 'Write your SQL, then run it to check it against the mission.'),
     }
   } finally {
     db.close()
@@ -151,7 +151,7 @@ export async function executeChallengeQuery(
   try {
     if (!studentSql.trim()) {
       return {
-        resultTitle: 'Awaiting query',
+        resultTitle: 'Query results',
         resultTable: null,
         snapshot: snapshotDatabase(studentDb),
         feedback: buildFeedback('error', 'Type a SQL statement before running the mission.'),
@@ -166,7 +166,7 @@ export async function executeChallengeQuery(
 
       if (!studentTable) {
         return {
-          resultTitle: 'No result set',
+          resultTitle: 'Query results',
           resultTable: null,
           snapshot: studentSnapshot,
           feedback: buildFeedback(
@@ -188,7 +188,7 @@ export async function executeChallengeQuery(
 
       if (matchesExpected && keptDatabaseSafe) {
         return {
-          resultTitle: 'Student query output',
+          resultTitle: 'Query results',
           resultTable: studentTable,
           snapshot: studentSnapshot,
           feedback: buildFeedback('success', challenge.successMessage, true),
@@ -200,7 +200,7 @@ export async function executeChallengeQuery(
         : 'The result table appeared, but this retrieval mission should not change the stored data.'
 
       return {
-        resultTitle: 'Student query output',
+        resultTitle: 'Query results',
         resultTable: studentTable,
         snapshot: studentSnapshot,
         feedback: buildFeedback('error', message),
@@ -212,7 +212,7 @@ export async function executeChallengeQuery(
     const mutationPassed = compareSnapshots(studentSnapshot, expectedSnapshot)
 
     return {
-      resultTitle: 'Students table after execution',
+      resultTitle: 'Students table after your changes',
       resultTable: studentSnapshot.Students,
       snapshot: studentSnapshot,
       feedback: mutationPassed
@@ -224,7 +224,7 @@ export async function executeChallengeQuery(
     }
   } catch (error) {
     return {
-      resultTitle: 'Query error',
+      resultTitle: 'Query results',
       resultTable: null,
       snapshot: snapshotDatabase(studentDb),
       feedback: buildFeedback('error', getFriendlySqlError(error)),

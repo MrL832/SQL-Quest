@@ -17,6 +17,8 @@ export interface SqlChallenge {
   story: string
   mission: string
   answerType: 'select' | 'mutation'
+  /** Table opened in the reference panel when this challenge loads. */
+  referenceTable: TableName
   starterQuery: string
   focus: string[]
   successMessage: string

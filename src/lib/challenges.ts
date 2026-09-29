@@ -1,4 +1,4 @@
-import type { SqlChallenge, TableName } from '../types'
+import type { SqlChallenge, TableName } from '@/types'
 
 export const TABLE_NAMES: TableName[] = ['Students', 'Houses']
 
@@ -38,15 +38,44 @@ INSERT INTO Students (StudentID, FirstName, LastName, YearGroup, HouseID) VALUES
   (9, 'Grace', 'Evans', 11, 1);
 `
 
-export const AQA_CHEAT_SHEET = [
-  'SELECT field1, field2 FROM table_name WHERE condition;',
-  'Use WHERE to filter records, for example WHERE YearGroup = 11.',
-  'Use ORDER BY field ASC or ORDER BY field DESC to sort output.',
-  'Join related tables with JOIN ... ON Students.HouseID = Houses.HouseID.',
-  'INSERT INTO table_name (field1, field2) VALUES (value1, value2);',
-  'UPDATE table_name SET field = value WHERE condition;',
-  'DELETE FROM table_name WHERE condition;',
-  'Text values use single quotes, such as \'Alex\'.',
+export interface CheatSheetEntry {
+  task: string
+  code: string
+}
+
+export const AQA_CHEAT_SHEET: CheatSheetEntry[] = [
+  {
+    task: 'Choose which fields to show',
+    code: 'SELECT FirstName, LastName FROM Students;',
+  },
+  {
+    task: 'Filter which records come back',
+    code: 'SELECT * FROM Students WHERE YearGroup = 11;',
+  },
+  {
+    task: 'Sort the results',
+    code: 'SELECT * FROM Houses ORDER BY Points DESC;',
+  },
+  {
+    task: 'Link two tables on a key',
+    code: 'SELECT * FROM Students, Houses WHERE Students.HouseID = Houses.HouseID;',
+  },
+  {
+    task: 'Add a new record',
+    code: "INSERT INTO Houses (HouseID, HouseName, Points) VALUES (5, 'Otter', 0);",
+  },
+  {
+    task: 'Change an existing record',
+    code: "UPDATE Houses SET Points = 200 WHERE HouseName = 'Dragon';",
+  },
+  {
+    task: 'Remove a record',
+    code: 'DELETE FROM Students WHERE StudentID = 9;',
+  },
+  {
+    task: 'Write a text value',
+    code: "WHERE FirstName = 'Alex'",
+  },
 ]
 
 export const CHALLENGES: SqlChallenge[] = [
@@ -60,6 +89,7 @@ export const CHALLENGES: SqlChallenge[] = [
     mission:
       'Write a query that shows only the first and last names of students in YearGroup 11.',
     answerType: 'select',
+    referenceTable: 'Students',
     starterQuery: '',
     focus: ['SELECT', 'FROM', 'WHERE'],
     successMessage: 'Year 11 register recovered. The next console routine is now unlocked.',
@@ -77,6 +107,7 @@ export const CHALLENGES: SqlChallenge[] = [
       'The head of houses wants the leaderboard displayed from highest score to lowest score.',
     mission: 'Show each house name with its points, sorted in descending order of points.',
     answerType: 'select',
+    referenceTable: 'Houses',
     starterQuery: '',
     focus: ['ORDER BY', 'DESC'],
     successMessage: 'Leaderboard sorted correctly. Relational missions are now available.',
@@ -94,6 +125,7 @@ export const CHALLENGES: SqlChallenge[] = [
     mission:
       'Return the first name, last name, and house name for Year 11 students using SELECT, FROM, WHERE, AND, and ORDER BY instead of JOIN.',
     answerType: 'select',
+    referenceTable: 'Students',
     starterQuery: '',
     focus: ['WHERE', 'AND', 'ORDER BY'],
     successMessage: 'Foreign-key link established. You can now update the register itself.',
@@ -112,6 +144,7 @@ export const CHALLENGES: SqlChallenge[] = [
     mission:
       "Insert Alex Smith into Students with StudentID 10, YearGroup 10, and HouseID 2.",
     answerType: 'mutation',
+    referenceTable: 'Students',
     starterQuery: '',
     focus: ['INSERT INTO', 'VALUES'],
     successMessage: 'New student added. Final admin clean-up missions are now unlocked.',
@@ -129,6 +162,7 @@ export const CHALLENGES: SqlChallenge[] = [
     mission:
       'Increase Dragon House to 200 points and delete Ruby Taylor from the Students table.',
     answerType: 'mutation',
+    referenceTable: 'Houses',
     starterQuery: '',
     focus: ['UPDATE', 'SET', 'DELETE'],
     successMessage: 'Database maintenance complete. SQL Quest is fully mastered.',

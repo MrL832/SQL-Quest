@@ -4,6 +4,23 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="./favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="color-scheme" content="light dark" />
+    <script>
+      // Resolve the theme before first paint so the page never flashes the wrong mode.
+      try {
+        const stored = localStorage.getItem('sql-quest-theme')
+        const theme =
+          stored === 'light' || stored === 'dark'
+            ? stored
+            : window.matchMedia('(prefers-color-scheme: dark)').matches
+              ? 'dark'
+              : 'light'
+        document.documentElement.classList.toggle('dark', theme === 'dark')
+        document.documentElement.style.colorScheme = theme
+      } catch {
+        // Storage can be blocked; fall back to the stylesheet default.
+      }
+    </script>
     <meta
       name="description"
       content="SQL Quest is a client-side GCSE SQL revision game for AQA Computer Science students."

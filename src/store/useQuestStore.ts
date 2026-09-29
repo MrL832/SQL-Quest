@@ -1,8 +1,8 @@
 import { create } from 'zustand'
 import { createJSONStorage, persist } from 'zustand/middleware'
-import { CHALLENGES } from '../lib/challenges'
-import { executeChallengeQuery, getInitialExecutionState } from '../lib/sqlEngine'
-import type { ExecutionFeedback, ExecutionState, TableName } from '../types'
+import { CHALLENGES } from '@/lib/challenges'
+import { executeChallengeQuery, getInitialExecutionState } from '@/lib/sqlEngine'
+import type { ExecutionFeedback, ExecutionState, TableName } from '@/types'
 
 interface QuestStore {
   currentChallengeId: string
@@ -12,7 +12,6 @@ interface QuestStore {
   executionState: ExecutionState | null
   isReady: boolean
   activeTable: TableName
-  isCheatSheetOpen: boolean
   showSuccessModal: boolean
   initialise: () => Promise<void>
   selectChallenge: (challengeId: string) => Promise<void>
@@ -20,7 +19,6 @@ interface QuestStore {
   runActiveQuery: () => Promise<void>
   resetActiveChallenge: () => Promise<void>
   setActiveTable: (tableName: TableName) => void
-  toggleCheatSheet: () => void
   closeSuccessModal: () => void
 }
 
@@ -44,8 +42,7 @@ export const useQuestStore = create<QuestStore>()(
       editorByChallenge: {},
       executionState: null,
       isReady: false,
-      activeTable: 'Students',
-      isCheatSheetOpen: false,
+      activeTable: CHALLENGES[0].referenceTable,
       showSuccessModal: false,
       async initialise() {
         const challenge = getChallenge(get().currentChallengeId)
@@ -53,7 +50,7 @@ export const useQuestStore = create<QuestStore>()(
 
         set((state) => ({
           isReady: true,
-          activeTable: 'Students',
+          activeTable: challenge.referenceTable,
           executionState: initialExecutionState,
           editorByChallenge: {
             ...state.editorByChallenge,
@@ -73,7 +70,7 @@ export const useQuestStore = create<QuestStore>()(
 
         set((state) => ({
           currentChallengeId: challenge.id,
-          activeTable: 'Students',
+          activeTable: challenge.referenceTable,
           executionState: replaceFeedback(initialExecutionState, {
             ok: false,
             kind: 'info',
@@ -135,10 +132,11 @@ export const useQuestStore = create<QuestStore>()(
         })
       },
       async resetActiveChallenge() {
+        const challenge = getChallenge(get().currentChallengeId)
         const initialExecutionState = await getInitialExecutionState()
 
         set({
-          activeTable: 'Students',
+          activeTable: challenge.referenceTable,
           executionState: replaceFeedback(initialExecutionState, {
             ok: false,
             kind: 'info',
@@ -150,11 +148,6 @@ export const useQuestStore = create<QuestStore>()(
         set({
           activeTable: tableName,
         })
-      },
-      toggleCheatSheet() {
-        set((state) => ({
-          isCheatSheetOpen: !state.isCheatSheetOpen,
-        }))
       },
       closeSuccessModal() {
         set({
