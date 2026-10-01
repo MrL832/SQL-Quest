@@ -1,0 +1,32 @@
+---
+description: Visual hierarchy, colour, type, and interaction rules for the SQL Quest UI
+globs: src/**/*.{tsx,css}
+alwaysApply: false
+---
+
+# UI and UX
+
+One reading column and one doing column. The mission says what to do. The editor is where it happens. `Run query` is the only filled primary button on the page.
+
+## Colour
+
+Use semantic tokens from `src/index.css`: `background`, `card`, `primary`, `muted`, `accent`, `destructive`, and `success`.
+
+- `primary` marks the current level, the task, and Run query.
+- `success` marks a correct answer or a completed level.
+- `destructive` marks a failed query.
+- Do not introduce a new hue for decoration. Change the tokens in `:root` and `.dark` when the palette should change.
+
+## Type and depth
+
+Card titles are `text-lg` and semibold. Body copy inside cards is `15px`. The mission title is `text-2xl`. Cards sit on `bg-card` with the existing ring and shadow; recessed areas use `bg-muted` or `bg-accent`.
+
+## Interaction
+
+- Keep the hint closed until the student opens "Stuck? Show a hint". The SQL statements they need live inside that hint, not beside the task.
+- The results table stays empty until a query returns rows. Use `Empty`. Do not preview the reference data there.
+- Open the database reference on `challenge.referenceTable`.
+- Bold SQL keywords with `SqlCode`. Do not invent a second highlighter.
+- `html` keeps `scrollbar-gutter: stable` so a scrollbar appearing cannot shift the page.
+- Light, dark, and system come from `ThemeProvider`. Do not hardcode a colour scheme.
+- Icons are for actions and state (run, reset, lock, check, theme). Do not add an icon tile beside every heading.

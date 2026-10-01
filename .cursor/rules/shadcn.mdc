@@ -1,0 +1,21 @@
+---
+description: How to compose shadcn/ui in this Vite app
+globs: src/components/**/*.tsx
+alwaysApply: false
+---
+
+# shadcn/ui
+
+Primitives come from the shadcn CLI and live in `src/components/ui/`. This project uses Base UI (`components.json` `style: base-nova`), so triggers take a `render` prop, not `asChild`.
+
+```tsx
+<CollapsibleTrigger render={<Button variant="ghost" />}>Show hint</CollapsibleTrigger>
+```
+
+- Import through `@/components/ui/...` and `@/lib/utils`.
+- `className` is for layout (`flex`, `gap-*`, `min-w-0`). Do not override a component's colours or type scale.
+- Use `bg-primary`, `text-muted-foreground`, and the other semantic tokens. Do not use raw palette classes such as `bg-blue-500`.
+- Space with `flex` and `gap-*`. Use `size-*` when width and height match.
+- Prefer an existing component: `Alert` for feedback, `Empty` for empty results, `Badge` for a short label, `Card` with `CardHeader`, `CardTitle`, `CardDescription`, and `CardContent`, `Tabs` for the two reference tables, `Dialog` for mission complete (it needs a `DialogTitle`).
+- Button icons use `data-icon="inline-start"` or `data-icon="inline-end"` and no size class. A pending button is `Spinner` plus `disabled`, not an `isLoading` prop.
+- Add a new primitive with `npx shadcn@latest add <component>`, then read the generated file before using it.

@@ -19,7 +19,7 @@ The current version covers:
 - selecting fields from a table using `SELECT`
 - filtering records using `WHERE`
 - sorting results using `ORDER BY`
-- understanding relational links between tables using `JOIN`
+- understanding relational links between tables by matching foreign keys to primary keys
 - identifying and using primary keys and foreign keys
 - inserting new records using `INSERT INTO`
 - modifying existing records using `UPDATE ... SET ... WHERE`
@@ -66,7 +66,7 @@ For every challenge:
 - the student writes and runs a SQL statement
 - the query executes against a real SQLite engine
 - the result is checked against the expected answer
-- the student can reset the data at any time using `Reset Table`
+- the student can reset the data at any time using `Reset data`
 
 This means students are working with actual SQL execution rather than keyword matching or regex-based marking.
 
@@ -95,7 +95,7 @@ Suggested classroom use:
 1. Introduce or recap the relevant SQL command.
 2. Display the schema preview and discuss how the tables are linked.
 3. Ask students to read the mission and write a query.
-4. Students click `Run Query` to test their answer.
+4. Students click `Run query` (or press `Ctrl`/`Cmd` + `Enter`) to test their answer.
 5. Use the output table and feedback box to discuss mistakes and corrections.
 6. Students unlock the next level after a correct solution.
 
@@ -110,12 +110,15 @@ This works well for:
 
 ## Student-Friendly Features
 
-- split-screen layout with the mission on the left and SQL console on the right
+- light, dark, and system colour themes, remembered between visits
+- split-screen layout with the mission on the left and SQL editor on the right
 - live table preview so students can inspect the starting data
+- hints hidden behind a "Stuck?" toggle, so students attempt the query first
 - collapsible AQA syntax cheat sheet
 - real SQL execution with friendly error feedback
 - reset button for quick retries
 - level unlocks for progression and motivation
+- responsive layout that works on tablets and phones
 
 ## Running The Project Locally
 
@@ -150,7 +153,8 @@ The app is configured for static hosting and uses:
 
 - Vite
 - React with TypeScript
-- Tailwind CSS
+- Tailwind CSS v4
+- shadcn/ui
 - `sql.js` WebAssembly
 
 This repository is set up to deploy to GitHub Pages from the `main` branch using GitHub Actions.
@@ -202,7 +206,8 @@ Before pushing a release, it is worth checking:
 
 - the site loads correctly from the GitHub Pages URL
 - all five levels can be opened and completed
-- `Run Query` and `Reset Table` both work
+- `Run query` and `Reset data` both work
+- light, dark, and system themes all render correctly
 - the SQLite `.wasm` asset loads correctly in production
 - browser refresh does not break navigation or assets
 - the README and repository description are up to date
@@ -229,7 +234,22 @@ Possible future additions include:
 - React
 - TypeScript
 - Vite
-- Tailwind CSS
+- Tailwind CSS v4
+- shadcn/ui (Base UI primitives)
 - Lucide React
 - `sql.js`
 - Zustand
+
+### Theming
+
+The interface is built on shadcn/ui semantic colour tokens (`background`, `card`,
+`primary`, `muted`, `destructive`, `success`) defined in `src/index.css`. Light and dark
+values live in the `:root` and `.dark` blocks, so changing a colour in one place updates
+both the components and the charts that use it. To restyle the app, edit those tokens
+rather than adding per-component colour classes.
+
+Adding a shadcn component:
+
+```
+npx shadcn@latest add <component>
+```

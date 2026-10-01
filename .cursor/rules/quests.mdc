@@ -1,0 +1,17 @@
+---
+description: How SQL challenges are defined, executed, and marked
+globs: src/lib/**/*.ts,src/store/**/*.ts,src/types.ts
+alwaysApply: false
+---
+
+# Quests
+
+Each level is one `SqlChallenge` in `CHALLENGES` (`src/lib/challenges.ts`). Every level starts from the same `SCHEMA_SQL` and `SEED_SQL` and is marked by real SQLite execution in `src/lib/sqlEngine.ts`, not by matching keywords.
+
+- `answerType: 'select'` compares the returned table to `expectedQuery`. Set `orderMatters` when the task is a sort.
+- `answerType: 'mutation'` compares the resulting snapshot to `expectedMutationSql`.
+- `referenceTable` is the table shown when that level opens. Levels about houses use `'Houses'`.
+- `focus` lists the SQL statements shown inside the hint. Keep `hint` as a nudge, not the finished query.
+- A correct result sets `feedback.ok`, unlocks `level + 1`, and opens the success dialog. A wrong result returns friendly copy and leaves progress unchanged.
+- `useQuestStore` persists `currentChallengeId`, `unlockedLevel`, and `completedChallengeIds` only. Editor text is not saved.
+- Keep both tables, `Students` and `Houses`, in the schema. Do not add a server or a second database engine.
